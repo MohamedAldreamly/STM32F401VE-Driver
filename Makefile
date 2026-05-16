@@ -27,7 +27,7 @@ INCLUDES = \
 -I HAL/SW \
 -I HAL/LED \
 -I HAL/SSD \
--I HAL/KPD
+-I HAL/KPD 
 
 CFLAGS = $(MCU) $(DEFS) $(INCLUDES) \
 -Wall -O0 -g \

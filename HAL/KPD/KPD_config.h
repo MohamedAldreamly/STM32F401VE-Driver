@@ -19,7 +19,6 @@
 /*
  * Key returned when no button is pressed.
  */
-#define KPD_NO_PRESSED_KEY   0xFFU
 
 
 

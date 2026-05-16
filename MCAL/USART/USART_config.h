@@ -1,5 +1,5 @@
 /*
- *<<<<<<<<<<<<<<<<<<<<<<<<<<<<    USART_config.h   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+ *<<<<<<<<<<<<<<<<<<<    USART_config.h   >>>>>>>>>>>>>>>>>>>>>>>>>>
  *
  *  Author  : Mohamed Aldreamly
  *  Date    : 15/5/2026
@@ -8,3 +8,8 @@
  *  Target  : STM32F401 / Cortex-M4
  *
  */
+#ifndef _USART_CONFIG_H_
+#define _USART_CONFIG_H_
+
+
+#endif 

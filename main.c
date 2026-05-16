@@ -4,6 +4,8 @@
 #include "RCC_interface.h"
 #include "GPIO_interface.h"
 #include "STK_interface.h"
+#include "USART_interface.h"
+
 
 #include "LED_interface.h"
 #include "SW_interface.h"
@@ -52,42 +54,86 @@ int main(void)
     RCC_voidInitSysClock();
     STK_voidInit();
     SSD_voidInit(SSD1);
+    USART_Init();
+
 
     RCC_voidEnablePeripheralClock(RCC_AHB1_BUS, RCC_GPIOA);
-    //RCC_voidEnablePeripheralClock(RCC_APB2_BUS, RCC_SYSCFG);
+    RCC_voidEnablePeripheralClock(RCC_APB2_BUS, RCC_SYSCFG);
     // أو:
-    // RCC_voidEnableSYSCFGClock();
+    //RCC_voidEnableSYSCFGClock();
+    RCC_voidEnablePeripheralClock(RCC_APB2_BUS, RCC_USART1);
 
-    SW_voidInit    (SW1);
-    LED_voidInit(LED1);
-    LED_voidTurnOff(LED1);
-    SSD_voidClear(SSD1);
-    SSD_voidEnable(SSD1);
-    SSD_voidDisplay(SSD1,8);
-    KPD_voidInit(KPD1);
-
-    KPD_u8GetPressedKey(KPD1);
-    u8 currentKey = KPD_NO_PRESSED_KEY; 
-    u8 preKey = KPD_NO_PRESSED_KEY; 
-
-
-    while (1)
+    char cmd_buffer[64];
+    while(1)
     {
-        if (currentKey !=KPD_NO_PRESSED_KEY && currentKey!= preKey)
+        char* cmd = Usart1_ReadLine(cmd_buffer, sizeof(cmd_buffer));
+        if (cmd != NULL)
         {
-        SSD_voidDisplay(SSD1, (currentKey - '0'));
+            Usart1_TransmitString("Echo>");
+            Usart1_TransmitString(cmd);
+            Usart1_TransmitString("\r\n");
+
+            if (strcmp(cmd , "LED_ON") == 0 )
+            {
+                Usart1_TransmitString("LED turned ON \r\n");
+            }
+            else if (strcmp(cmd , "LED_OFF") == 0 )
+            {
+                Usart1_TransmitString("LED turned OFF \r\n");
+            }
+            else
+            {
+                Usart1_TransmitString("Unknown command \r\n");
+            }
         }
-        //preKey==currentKey;
+    }
+
+    // u8 data = ' '; 
+    // while (1)
+    // {
+    //     data = Usart1_RecieveByte();
+
+    //     if (data == '1')
+    //     {
+    //         Usart1_TransmitString("Hello\r\n");
+    //     }
+    //     else if (data == '2')
+    //     {
+    //         Usart1_TransmitString("Wellcome\r\n");
+    //     }
+
+    // }
+
+    // SW_voidInit    (SW1);
+    // LED_voidInit(LED1);
+    // LED_voidTurnOff(LED1);
+    // SSD_voidClear(SSD1);
+    // SSD_voidEnable(SSD1);
+    // SSD_voidDisplay(SSD1,8);
+    // KPD_voidInit(KPD1);
+
+    // KPD_u8GetPressedKey(KPD1);
+    // u8 currentKey = KPD_NO_PRESSED_KEY; 
+    // u8 preKey = KPD_NO_PRESSED_KEY; 
+
+
+    // while (1)
+    // {
+    //     if (currentKey !=KPD_NO_PRESSED_KEY && currentKey!= preKey)
+    //     {
+    //     SSD_voidDisplay(SSD1, (currentKey - '0'));
+    //     }
+    //     preKey==currentKey;
         
 
 
-        // if (SW_u8GetState(SW1) == SW_PRESSED)
-        // {
-        // SSD_voidDisplay(SSD1, 0);
-        // LED_voidTurnOn(LED1);
-        // }
+    //     // if (SW_u8GetState(SW1) == SW_PRESSED)
+    //     // {
+    //     // SSD_voidDisplay(SSD1, 0);
+    //     // LED_voidTurnOn(LED1);
+    //     // }
 
-    }
+    // }
     
 
     // LED_voidInit(&LED1);

@@ -92,4 +92,5 @@ void GPIO_voidSetPinValue(GPIO_Typedef* Copy_GPIO, u8 Copy_u8Pin, u8 Copy_u8Valu
 void GPIO_voidTogglePinValue(GPIO_Typedef* Copy_GPIO, u8 Copy_u8Pin);
 void GPIO_voidGetPinValue(GPIO_Typedef* Copy_GPIO, u8 Copy_u8Pin, u8* Copy_u8Value);
 
+void GPIO_voidSetPinAF(GPIO_Typedef* Copy_GPIO, u8 Copy_u8Pin, u8 Copy_u8AFSelection);
 #endif
